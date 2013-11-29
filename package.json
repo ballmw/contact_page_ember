@@ -7,6 +7,9 @@
     "name": "John Doe",
     "company": "ACME, Inc."
   },
+  "devDependencies": {
+    "grunt-aws-s3": "~0.7.1"
+  },
   "dependencies": {
     "grunt-ember-handlebars": "0.7.0",
     "lineman": ">= 0.12.3"

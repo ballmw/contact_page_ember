@@ -42,3 +42,34 @@ module.exports = require(process.env['LINEMAN_MAIN']).config.extend 'application
   watch:
     handlebars:
       tasks: ["ember_handlebars:compile", "concat:js"]
+
+  aws:
+    bucket: 'angular-site'
+
+  aws_s3:
+    options:
+      region: 'us-east-1',
+      uploadConcurrency: 5,
+      downloadConcurrency: 5
+
+  production:
+    options:
+      bucket: '<%= aws.bucket %>',
+      mime: 'dist/assets/production/LICENCE': 'text/plain'
+    files: [{action:'upload', expand: true, cwd: 'app/', src: ['**']}]
+
+  clean_production:
+    options:
+      bucket: '<%= aws.bucket %>',
+      debug: true
+    files: [{dest: '*', action: 'delete'}]
+
+  download_production:
+    options:
+      bucket: '<%= aws.bucket %>'
+    files: [{dest: 'app/', cwd: 'backup/', action: 'download'}]
+  secret:
+    options:
+      bucket: '<%= aws.bucket %>',
+      access: 'private'
+    files: [{expand: true, cwd: 'secret_garden/', src: ['*.key'], dest: 'secret/'}]
